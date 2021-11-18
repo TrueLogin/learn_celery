@@ -1,6 +1,8 @@
 """Just a starting point"""
 
-from .processors import SplitPdfProcessor
+import os
+
+from .processors import SplitPdfProcessor, PdfPageProcessor
 
 def main(argv) -> None:
     """
@@ -13,7 +15,20 @@ def main(argv) -> None:
         - Update each page as a Celery task (in parallel)
         - Compile a single file back from updated pages
     """
-    print(f'argv[1] = {argv[1]}')
-    split_processor = SplitPdfProcessor(argv[1])
+    original_document = argv[1]
+    watermark_document = argv[2]
+    print(f'Process document: {original_document}')
+    print('- Split document')
+    split_processor = SplitPdfProcessor(original_document)
     tmp_dir_path = split_processor.call()
-    print(f'Pages are saved here: {tmp_dir_path}')
+    print(f'- Pages are saved here: {tmp_dir_path}')
+    print('- Process pages')
+    pages = [
+        os.path.join(tmp_dir_path, name)
+        for name in os.listdir(tmp_dir_path)
+        if os.path.isfile(name)
+    ]
+    watermarked_pages = []
+    for page in pages:
+        page_processor = PdfPageProcessor(page, watermark_document)
+        watermarked_pages.append(page_processor.call())
