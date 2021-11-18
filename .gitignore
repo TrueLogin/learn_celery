@@ -144,3 +144,5 @@ logs/*
 !logs/.keep
 
 .DS_Store
+.pylintrc
+.vscode/

@@ -13,7 +13,6 @@ class SplitPdfProcessor: # pylint: disable=too-few-public-methods
     def call(self) -> str:
         """Starts splitting a document"""
 
-        print(f'Path to original file: {self.original_pdf_filepath}')
         tmp_dir_path = self.__create_tmp_dir()
         self.__split_document(tmp_dir_path)
         return tmp_dir_path
@@ -41,9 +40,9 @@ class SplitPdfProcessor: # pylint: disable=too-few-public-methods
 
         if not os.path.exists(tmp_dir_name):
             os.mkdir(tmp_dir_name)
-            print(f'-- Directory created successfully ({tmp_dir_name})')
+            print(f'-- TMP directory created successfully ({tmp_dir_name})')
         else:
-            print(f'-- Directory exists ({tmp_dir_name})')
+            print(f'-- TMP directory exists ({tmp_dir_name})')
 
         root_app_dir.append(tmp_dir_name)
         return '/'.join(root_app_dir)
@@ -55,11 +54,10 @@ class SplitPdfProcessor: # pylint: disable=too-few-public-methods
         """
         os.chdir(tmp_dir_path)
         with open(self.original_pdf_filepath, 'rb') as pdf_descriptor:
-            original_filename = self.__pdf_filename()
             pdf = PdfFileReader(pdf_descriptor)
 
             for page in range(pdf.getNumPages()):
-                pdf_page_filename = f'{original_filename}_page_{page + 1}.pdf'
+                pdf_page_filename = f'page_{page + 1}.pdf'
                 pdf_writer = PdfFileWriter()
                 pdf_writer.addPage(pdf.getPage(page))
 
