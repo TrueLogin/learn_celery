@@ -2,7 +2,7 @@
 
 import os
 
-from .processors import SplitPdfProcessor, PdfPageProcessor
+from .processors import SplitPdfProcessor, PdfPageProcessor, CompilePdfProcessor
 
 def main(argv) -> None:
     """
@@ -17,11 +17,13 @@ def main(argv) -> None:
     """
     original_document = argv[1]
     watermark_document = argv[2]
+
     print(f'Process document: {original_document}')
     print('- Split document')
     split_processor = SplitPdfProcessor(original_document)
     tmp_dir_path = split_processor.call()
     print(f'- Pages are saved here: {tmp_dir_path}')
+
     print('- Process pages')
     pages = [
         os.path.join(tmp_dir_path, name)
@@ -32,3 +34,11 @@ def main(argv) -> None:
     for page in pages:
         page_processor = PdfPageProcessor(page, watermark_document)
         watermarked_pages.append(page_processor.call())
+    print('- Processing finished')
+    print(f'- {watermarked_pages}')
+
+    print('- Compile the document back')
+    processor = CompilePdfProcessor(tmp_dir_path, original_document)
+    compiled_pdf_path = processor.call()
+    print('- Compiled')
+    print(f'Processing completed: {compiled_pdf_path}')
