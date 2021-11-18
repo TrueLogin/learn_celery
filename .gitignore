@@ -142,3 +142,5 @@ logs/*
 
 !tmp/.keep
 !logs/.keep
+
+.DS_Store
