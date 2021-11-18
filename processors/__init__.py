@@ -1,4 +1,4 @@
-"""Proper initialization of the package"""
+"""Processing modules"""
 
 from .compile_pdf_processor import CompilePdfProcessor
 from .pdf_page_processor import PdfPageProcessor

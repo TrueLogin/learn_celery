@@ -32,7 +32,7 @@ class SplitPdfProcessor: # pylint: disable=too-few-public-methods
 
         relative_script_path = os.path.abspath(__file__)
         script_dir_name = os.path.dirname(relative_script_path)
-        root_app_dir = script_dir_name.split('/')[0:-2]
+        root_app_dir = script_dir_name.split('/')[0:-1]
 
         # add tmp dir to the list for further join
         root_app_dir.append('tmp')
