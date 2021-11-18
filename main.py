@@ -1,7 +1,6 @@
 """Just a starting point"""
 
-import sys
-import processors
+from .processors import SplitPdfProcessor
 
 def main(argv) -> None:
     """
@@ -15,9 +14,6 @@ def main(argv) -> None:
         - Compile a single file back from updated pages
     """
     print(f'argv[1] = {argv[1]}')
-    split_processor = processors.SplitPdfProcessor(argv[1])
+    split_processor = SplitPdfProcessor(argv[1])
     tmp_dir_path = split_processor.call()
     print(f'Pages are saved here: {tmp_dir_path}')
-
-if __name__ == '__main__':
-    main(sys.argv)
