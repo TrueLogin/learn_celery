@@ -42,3 +42,16 @@ def main(argv) -> None:
     compiled_pdf_path = processor.call()
     print('- Compiled')
     print(f'Processing completed: {compiled_pdf_path}')
+
+    remove_tmp_files(tmp_dir_path)
+
+def remove_tmp_files(dir_path):
+    """Removes tmp files from .tmp directory"""
+    if dir_path == os.getcwd():
+        os.chdir('..')
+
+    for filename in os.listdir(dir_path):
+        file = os.path.join(dir_path, filename)
+        os.remove(file)
+
+    os.rmdir(dir_path)
